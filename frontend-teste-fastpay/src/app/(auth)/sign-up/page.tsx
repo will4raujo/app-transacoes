@@ -1,21 +1,21 @@
-import SubmitButton from '../../../components/submitButton'
-import InputText from '../../../components/inputText'
-
+import SubmitButton from '@/components/submitButton'
+import InputText from '@/components/inputText'
 import Link from 'next/link'
+import InputPassword from '@/components/inputPassword'
 
 export default function SignUp() {
 
   return (
     <>
-      <legend className="text-white">Crie sua conta</legend>
-      
-      <InputText placeholder="Nome"/>
-      <InputText placeholder="E-mail"/>
-      <InputText placeholder="Senha"/>
+      <legend className="text-white self-center">Crie sua conta</legend>
 
-      <SubmitButton text="Cadastrar"/>
+      <InputText placeholder="Nome" />
+      <InputText placeholder="E-mail" />
+      <InputPassword placeholder="Senha" />
 
-      <Link href="/sign-in" className='text-white'>
+      <SubmitButton text="Cadastrar" />
+
+      <Link href="/sign-in" className='text-white self-center hover:underline'>
         Já tenho uma conta
       </Link>
     </>
