@@ -4,7 +4,7 @@ import Link from 'next/link'
 
 export default function Header() {
   return (
-    <header className='bg-zinc-900 text-white py-4 px-6 h-[44px] w-full bg-opacity-90 flex items-center justify-between gap-10'>
+    <header className='bg-zinc-900 text-white py-4 px-4 h-[44px] w-full bg-opacity-90 flex items-center justify-between gap-10'>
       <BurguerMenu>
         <Link href='/'>Home</Link>
         <Link href='/categories'>Categorias</Link>
