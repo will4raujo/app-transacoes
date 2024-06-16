@@ -7,116 +7,103 @@ import { useState, useEffect } from "react";
 type CategoryType = 'fixed' | 'variable';
 
 type Category = {
-  type: CategoryType;
+  id: number;
   name: string;
+  type: CategoryType;
+}
+
+type PersonalCategory = {
+  categories: Category[];
+}
+
+type BusinessCategory = {
+  categories: Category[];
 }
 
 type CategoriesObject = {
-  personal: {
-    predefined: Category[];
-    custom: Category[];
-  };
-  business: {
-    predefined: Category[];
-    custom: Category[];
-  };
-};
-
-type CategoryProps = {
-  expenseModel: keyof CategoriesObject;
-  expenseType: keyof CategoriesObject['personal'];
+  personal: PersonalCategory[];
+  business: BusinessCategory[];
 }
 
-const categories: CategoriesObject = {
+const categoriesData = {
   personal: {
-    predefined: [
-      { type: 'fixed', name: 'Moradia' },
-      { type: 'fixed', name: 'Educação' },
-      { type: 'fixed', name: 'Roupas' },
-      { type: 'fixed', name: 'Outros' },
-      { type: 'variable', name: 'Alimentação' },
-      { type: 'variable', name: 'Transporte' },
-      { type: 'variable', name: 'Entretenimento' },
-    ],
-    custom: []
+    categories: [
+      { id: 1, name: 'Alimentação', type: 'fixed' },
+      { id: 2, name: 'Transporte', type: 'variable' },
+      { id: 3, name: 'Lazer', type: 'variable' },
+      { id: 4, name: 'Saúde', type: 'variable' },
+      { id: 5, name: 'Educação', type: 'variable' },
+      { id: 6, name: 'Moradia', type: 'fixed' },
+    ]
   },
   business: {
-    predefined: [
-      { type: 'fixed', name: 'Salário' },
-      { type: 'fixed', name: 'Freelancer' },
-      { type: 'fixed', name: 'Outros' },
-      { type: 'variable', name: 'Aluguel' },
-      { type: 'variable', name: 'Transporte' },
-      { type: 'variable', name: 'Entretenimento' },
-    ],
-    custom: []
+    categories: [
+      { id: 1, name: 'Salário', type: 'fixed' },
+      { id: 2, name: 'Vendas', type: 'variable' },
+      { id: 3, name: 'Despesas Gerais', type: 'variable' },
+    ]
   }
 }
 
-export default function Categories({ expenseModel, expenseType }: CategoryProps) {
-  const [selectedExpenseModel, setSelectedExpenseModel] = useState<keyof CategoriesObject>(expenseModel);
-  const [selectedExpenseType, setSelectedExpenseType] = useState<keyof CategoriesObject['personal']>(expenseType);
+export default function Categories() {
+  const [selectedCategoryModel, setSelectedCategoryModel] = useState<'personal' | 'business'>('personal');
+  const [selectedCategoryType, setSelectedCategoryType] = useState<'predefined' | 'custom'>('predefined');
 
-  const handleModelChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedExpenseModel(e.target.value as keyof CategoriesObject);
+  const handleCategoryModelChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedCategoryModel(event.target.value as 'personal' | 'business');
   }
 
-  const handleTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedExpenseType(e.target.value as keyof CategoriesObject['personal']);
+  const handleCategoryTypeChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedCategoryType(event.target.value as 'predefined' | 'custom');
   }
-
-  useEffect(() => {
-    setSelectedExpenseModel(expenseModel);
-    setSelectedExpenseType(expenseType);
-  }, [expenseModel, expenseType]);
-
-  const currentCategories = categories[selectedExpenseModel][selectedExpenseType];
-
-  const fixedCategories = currentCategories.filter(category => category.type === 'fixed');
-  const variableCategories = currentCategories.filter(category => category.type === 'variable');
 
   return (
     <main className='w-full px-6 md:px-10 py-5 flex flex-col gap-5'>
       <h1 className='text-3xl font-bold'>Categorias</h1>
       <div>
-        <h2 className='text-xl mb-2'>Adicionar nova categoria</h2>
-        <form className="flex gap-4 ">
-          <select className="flex items-center gap-2 max-w-[238px] rounded-md border-2 border-zinc-500 bg-black/60 p-1 pl-2" value={selectedExpenseModel} onChange={handleModelChange}>
-            <option value='personal'>Pessoal</option>
-            <option value='business'>Empresarial</option>
-          </select>
-          <select className="flex items-center gap-2 max-w-[238px] rounded-md border-2 border-zinc-500 bg-black/60 p-1 pl-2" value={selectedExpenseType} onChange={handleTypeChange}>
-            <option value='predefined'>Predefinida</option>
-            <option value='custom'>Personalizada</option>
-          </select>
-          { selectedExpenseType === 'custom' && (
-            <>
+        <form className="flex gap-4 items-end ">
+          <div className='flex gap-4 items-center'>
+            <select className="flex items-center gap-2 max-w-[238px] h-[48px] rounded-md border-2 border-zinc-500 bg-black/60 p-1 pl-2" onChange={handleCategoryModelChange} value={selectedCategoryModel}>
+              <option value='personal'>Pessoal</option>
+              <option value='business'>Empresarial</option>
+            </select>
+            <select className="flex items-center gap-2 max-w-[238px] h-[48px] rounded-md border-2 border-zinc-500 bg-black/60 p-1 pl-2" onChange={handleCategoryTypeChange} value={selectedCategoryType}>
+              <option value='predefined'>Predefinida</option>
+              <option value='custom'>Personalizada</option>
+            </select>
+          </div>
+          <div>
+              <h2 className='text-xl mb-2'>Adicionar nova categoria</h2>
+              <div className="flex gap-4">
               <InputText placeholder='Nome da categoria' /> 
+              <select className="flex items-center gap-2 max-w-[238px] h-[48px] rounded-md border-2 border-zinc-500 bg-black/60 p-1 pl-2">
+                <option value='fixed'>Fixa</option>
+                <option value='variable'>Variável</option>
+              </select>
               <SubmitButton text='Adicionar' />
-            </>
-          )}
+              </div>
+          </div>
         </form>
       </div>
       <div>
         <h2 className='text-xl mb-2'>Lista de categorias</h2>
         <Suspense fallback={<p>Carregando...</p>}>
-          <h2>{selectedExpenseModel === 'personal' ? 'Pessoal' : 'Empresarial'}</h2>
-          <h3>{selectedExpenseType === 'predefined' ? 'Predefinida' : 'Personalizada'}</h3>
-          <div>
-            <h4 className='text-lg font-semibold'>Fixas</h4>
-            <ul>
-              {fixedCategories.map((category, index) => (
-                <li key={index}>{category.name}</li>
+          { selectedCategoryType === 'predefined' && ( 
+            <>
+              <h3 className='text-lg font-bold'>Categorias fixas</h3>
+              <ul>
+              {categoriesData[selectedCategoryModel].categories.filter(category => category.type === 'fixed').map(category => (
+                <li key={category.id}>{category.name}</li>
               ))}
-            </ul>
-            <h4 className='text-lg font-semibold'>Variáveis</h4>
-            <ul>
-              {variableCategories.map((category, index) => (
-                <li key={index}>{category.name}</li>
-              ))}
-            </ul>
-          </div>
+                </ul><h3 className='text-lg font-bold'>Categorias variáveis</h3><ul>
+                {categoriesData[selectedCategoryModel].categories.filter(category => category.type === 'variable').map(category => (
+                  <li key={category.id}>{category.name}</li>
+                ))}
+              </ul>
+            </>
+          )}
         </Suspense>
+        <SubmitButton text='Salvar' />
       </div>
     </main>
   )
