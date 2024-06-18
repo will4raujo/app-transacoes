@@ -1,8 +1,16 @@
 'use client'
 
-export default function SubmitButton({ text } : { text: string }) {
+
+type SubmitButtonProps = {
+  text: string;
+  onClick?: () => void;
+  type?: 'button' | 'submit' | 'reset';
+}
+
+export default function SubmitButton({ text, onClick, type, ...rest }: SubmitButtonProps) {
+  
   return (
-    <button className='bg-violet-500 min-w-[120px] h-[48px] p-2 text-white  rounded-md hover:bg-violet-600 transition-colors duration-200'>
+    <button onClick={onClick} className='bg-violet-500 min-w-[120px] h-[48px] p-2 text-white  rounded-md hover:bg-violet-600 transition-colors duration-200' type={type} {...rest}>
       {text}
     </button>
   )

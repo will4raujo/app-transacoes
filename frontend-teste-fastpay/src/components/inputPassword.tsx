@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import Paragraph from './paragraph';
 import ValidationItem from './validationItem';
 
-export default function InputPassword({ placeholder }: { placeholder: string }) {
+export default function InputPassword( {...rest} ) {
 
   const [password, setPassword] = useState('');
   const [showValidations, setShowValidations] = useState(false);
@@ -41,6 +41,7 @@ export default function InputPassword({ placeholder }: { placeholder: string }) 
           value={password}
           onChange={handleChange}
           className="text-zinc-500 bg-zinc-900 h-[48px] pl-4 rounded-md"
+          {...rest}
         />
         <Paragraph>A senha deve ter no mínimo 8 caracteres</Paragraph>
       </div>
