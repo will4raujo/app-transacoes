@@ -9,7 +9,6 @@ export default function Header() {
         <Link href='/'>Home</Link>
         <Link href='/categories'>Categorias</Link>
         <Link href='/transactions'>Transações</Link>
-        <Link href='/'>Sair</Link>
       </BurguerMenu>
       <nav className='hidden md:block'>
         <ul className='flex gap-4'>
@@ -26,7 +25,7 @@ export default function Header() {
       </nav>
 
       <div className='cursor-pointer flex gap-2 items-center'>
-        <span className='hidden md:block text-sm text-white'>Sair</span>
+        <span className='hidden md:block text-lg text-white'>Sair</span>
         <LogOut size={20} />
       </div>
     </header>
