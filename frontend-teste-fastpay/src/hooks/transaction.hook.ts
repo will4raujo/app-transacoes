@@ -8,6 +8,9 @@ type Transaction = {
   value: number;
   date: string;
   categoryId: Number;
+  category?: {
+    name: string;
+  };
 };
 
 type TransactionHook = {
@@ -20,9 +23,12 @@ type TransactionHook = {
 
 export const useTransactionHook = create<TransactionHook>()(
   devtools((set, get) => ({
-    getTransactions: () => {
-      api.get('/transactions')
+    getTransactions: async () => {
+      const response = await api.get('/transactions')
         .then((response) => {
+          response.data.map((transaction: Transaction) => {
+            transaction.date = new Date(transaction.date).toLocaleDateString('pt-BR');
+          });
           set({ transactions: response.data });
         })
         .catch(() => {
@@ -30,10 +36,10 @@ export const useTransactionHook = create<TransactionHook>()(
             ('Erro ao carregar transações');
         }
         );
+      return response;
     },
-    addTransaction: (data) => {
-      console.log('addtransaction', data)
-      api.post('/transactions', data)
+    addTransaction: async (data) => {
+      const response = await api.post('/transactions', data)
         .then(() => {
           alert('Transação adicionada com sucesso');
           get().getTransactions();
@@ -41,9 +47,10 @@ export const useTransactionHook = create<TransactionHook>()(
         .catch(() => {
           alert('Erro ao adicionar transação');
         });
+      return response;
     },
-    editTransaction: (id, data) => {
-      api.put(`/transactions/${id}`, data)
+    editTransaction: async (id, data) => {
+      const response = await api.put(`/transactions/${id}`, data)
         .then(() => {
           alert('Transação editada com sucesso');
           get().getTransactions();
@@ -51,9 +58,10 @@ export const useTransactionHook = create<TransactionHook>()(
         .catch(() => {
           alert('Erro ao editar transação');
         });
+      return response;
     },
-    deleteTransaction: (id) => {
-      api.delete(`/transactions/${id}`)
+    deleteTransaction: async (id) => {
+      const response = await api.delete(`/transactions/${id}`)
         .then(() => {
           alert('Transação deletada com sucesso');
           get().getTransactions();
@@ -61,6 +69,8 @@ export const useTransactionHook = create<TransactionHook>()(
         .catch(() => {
           alert('Erro ao deletar transação');
         });
+
+      return response;
     }
   }))
 )
