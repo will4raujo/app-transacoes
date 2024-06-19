@@ -4,7 +4,7 @@ import api from '@/services/api';
 
 type CategoryType = 'predefined' | 'custom';
 
-type Category = {
+export type Category = {
   id: number;
   name: string;
   type: CategoryType;

@@ -1,24 +1,25 @@
 import create from 'zustand'
 import { devtools } from 'zustand/middleware'
 import api from '@/services/api'
+import { Category } from './category.hook'
 
 type Transaction = {
-  id?: number;
+  id?: string;
   description: string;
   value: number;
   date: string;
   categoryId: Number;
-  category?: {
-    name: string;
-  };
+  category?: Category;
 };
 
 type TransactionHook = {
   transactions?: Transaction[];
+  transaction?: Transaction;
   getTransactions: () => void;
   addTransaction: (data: Transaction) => void;
-  editTransaction: (id: number, data: Transaction) => void;
-  deleteTransaction: (id: number) => void;
+  editTransaction: (id: string, data: Transaction) => void;
+  deleteTransaction: (id: string) => void;
+  getTransactionById: (id: string) => void;
 };
 
 export const useTransactionHook = create<TransactionHook>()(
@@ -71,6 +72,14 @@ export const useTransactionHook = create<TransactionHook>()(
         });
 
       return response;
+    },
+    getTransactionById: async (id) => {
+      try {
+        const response = await api.get(`/transactions/${id}`);
+        set({ transaction: response.data });
+      } catch (error) {
+        alert('Erro ao carregar transação');
+      }
     }
   }))
 )
