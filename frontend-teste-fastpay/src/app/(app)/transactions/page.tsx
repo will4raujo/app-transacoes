@@ -1,15 +1,37 @@
-import { Suspense } from 'react'
+'use client'
+import { Suspense, useEffect } from 'react'
 import Link from 'next/link'
 import {PenLine, Trash} from 'lucide-react'
+import { useTransactionHook } from '@/hooks/transaction.hook'
+import { useRouter } from 'next/navigation'
 
 export default function Transactions() {
+  const { transactions, getTransactions, deleteTransaction } = useTransactionHook()
+
+  const fetchTransactions = () => {
+    getTransactions()
+  }
+
+  const router = useRouter()
+
+  const handleEditTransaction = (id: string) => {
+    router.push(`/transactions/${id}`)
+  }
+
+  const handleDeleteTransaction = (id: string) => {
+    deleteTransaction(id)
+    fetchTransactions()
+  }
+
+  useEffect(() => {
+    fetchTransactions()  
+  }, [])
   return (
     <main className='w-full px-4 md:px-10 py-5 flex flex-col gap-5 mb-[80px] md:mx-auto max-w-[1024px]'>
       <div className='flex flex-col md:flex-row gap-4 justify-between'>
       <h1 className='text-3xl font-bold'>Transações financeiras</h1>
         <Link href='/transactions/new' passHref className='bg-zinc-500 min-w-[120px] h-[45px] px-2 pt-2 pb-0 text-white rounded-md text-center hover:bg-zinc-600 transition-colors duration-200'>Nova transação</Link>
       </div>
-      <Suspense fallback={<p>Carregando lista de transações...</p>}>
         <table className='w-full'>
           <thead className='bg-zinc-900 text-white'>
             <tr>
@@ -21,64 +43,26 @@ export default function Transactions() {
             </tr>
           </thead>
           <tbody>
-            {transactionsData.map(transaction => (
-              <tr key={transaction.id}>
-                <td className='p-2 text-center'>{transaction.description}</td>
-                <td className='p-2 text-center'>{transaction.value}</td>
-                <td className='p-2 text-center'>{transaction.date}</td>
-                <td className='p-2 text-center hidden md:table-cell'>{transaction.category}</td>
-                <td className='p-2 flex gap-2 justify-center'>
-                  <button className='bg-zinc-900 p-1 rounded-md hover:bg-zinc-600 transition-colors duration-200'>
-                    <PenLine size={24} />
-                  </button>
-                  <button className='bg-zinc-900 p-1 rounded-md hover:bg-zinc-600 transition-colors duration-200'>
-                    <Trash size={24} />
-                  </button>
-                </td>
-              </tr>
-            ))}
+            <Suspense fallback={<p>Carregando lista de transações...</p>}>
+              {transactions?.map(transaction => (
+                <tr key={transaction.id}>
+                  <td className='p-2 text-center'>{transaction.description}</td>
+                  <td className='p-2 text-center'>{transaction.value}</td>
+                  <td className='p-2 text-center'>{transaction.date}</td>
+                  <td className='p-2 text-center hidden md:table-cell'>{transaction.category?.name}</td>
+                  <td className='p-2 flex gap-2 justify-center'>
+                    <button onClick={() => handleEditTransaction(transaction.id?.toString() ?? '')} className='bg-zinc-900 p-1 rounded-md hover:bg-zinc-600 transition-colors duration-200'>
+                      <PenLine size={24} />
+                    </button>
+                    <button onClick={() => handleDeleteTransaction(transaction.id?.toString() ?? '')} className='bg-zinc-900 p-1 rounded-md hover:bg-zinc-600 transition-colors duration-200'>
+                      <Trash size={24} />
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </Suspense>
           </tbody>
         </table>
-      </Suspense>
-
     </main>
   )
 }
-
-const transactionsData = [
-  {
-    id: 1,
-    description: 'Salário',
-    value: 5000,
-    date: '2022-09-10',
-    category: 'Salário'
-  },
-  {
-    id: 2,
-    description: 'Aluguel',
-    value: 1500,
-    date: '2022-09-10',
-    category: 'Moradia'
-  },
-  {
-    id: 3,
-    description: 'Mercado',
-    value: 500,
-    date: '2022-09-10',
-    category: 'Alimentação'
-  },
-  {
-    id: 4,
-    description: 'Freelancer',
-    value: 1000,
-    date: '2022-09-10',
-    category: 'Freelancer'
-  },
-  {
-    id: 5,
-    description: 'Aluguel',
-    value: 1500,
-    date: '2022-09-10',
-    category: 'Moradia'
-  }
-]
