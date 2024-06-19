@@ -11,6 +11,7 @@ interface AuthData {
   isAuthenticated?: boolean;
   token?: string;
   login: (data: LoginModel) => Promise<boolean>
+  logout: () => void
 }
 
 export const useAuthHook = create<AuthData>()(
@@ -34,7 +35,13 @@ export const useAuthHook = create<AuthData>()(
             return false
           }
           return true
-        }
+        },
+        logout: () => {
+          set(() => ({
+            isAuthenticated: false,
+            token: undefined,
+          }))
+        },
       }),
       {
         name: 'fastpay-auth',
