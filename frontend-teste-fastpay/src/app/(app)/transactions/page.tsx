@@ -6,7 +6,7 @@ import { useTransactionHook } from '@/hooks/transaction.hook'
 import { useRouter } from 'next/navigation'
 
 export default function Transactions() {
-  const { transactions, getTransactions } = useTransactionHook()
+  const { transactions, getTransactions, deleteTransaction } = useTransactionHook()
 
   const fetchTransactions = () => {
     getTransactions()
@@ -16,6 +16,11 @@ export default function Transactions() {
 
   const handleEditTransaction = (id: string) => {
     router.push(`/transactions/${id}`)
+  }
+
+  const handleDeleteTransaction = (id: string) => {
+    deleteTransaction(id)
+    fetchTransactions()
   }
 
   useEffect(() => {
@@ -49,7 +54,7 @@ export default function Transactions() {
                     <button onClick={() => handleEditTransaction(transaction.id?.toString() ?? '')} className='bg-zinc-900 p-1 rounded-md hover:bg-zinc-600 transition-colors duration-200'>
                       <PenLine size={24} />
                     </button>
-                    <button className='bg-zinc-900 p-1 rounded-md hover:bg-zinc-600 transition-colors duration-200'>
+                    <button onClick={() => handleDeleteTransaction(transaction.id?.toString() ?? '')} className='bg-zinc-900 p-1 rounded-md hover:bg-zinc-600 transition-colors duration-200'>
                       <Trash size={24} />
                     </button>
                   </td>
