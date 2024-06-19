@@ -57,7 +57,7 @@ export default function SignUp() {
   };
   
   return (
-    <>
+    <form className='flex flex-col w-[350px] md:w-[478px] gap-6 bg-black/60 border-zinc-900 border-2 p-5 md:p-10 rounded-md'>
       <legend className="text-white self-center">Crie sua conta</legend>
 
       <InputText placeholder="Nome" onChange={e => setName(e.target.value)} />
@@ -89,6 +89,6 @@ export default function SignUp() {
       <Link href="/sign-in" className='text-white self-center hover:underline'>
         Já tenho uma conta
       </Link>
-    </>
+    </form>
   )
 }
