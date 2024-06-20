@@ -1,6 +1,7 @@
 'use client'
 import { useEffect, useState } from 'react'
 import { useTransactionHook } from '@/hooks/transaction.hook'
+import formatCurrency from '@/components/formatCurrency'
 
 export default function Summary() {
   const { getSummary } = useTransactionHook()
@@ -9,10 +10,6 @@ export default function Summary() {
   const fetchSummary = async () => {
     const response = await getSummary()
     setSummary(response as any)
-  }
-
-  const formatCurrency = (value: number) => {
-    return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(value)
   }
 
   useEffect(() => {

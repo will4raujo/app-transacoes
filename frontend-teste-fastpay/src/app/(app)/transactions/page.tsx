@@ -4,6 +4,7 @@ import Link from 'next/link'
 import {PenLine, Trash} from 'lucide-react'
 import { useTransactionHook } from '@/hooks/transaction.hook'
 import { useRouter } from 'next/navigation'
+import formatCurrency from '@/components/formatCurrency'
 
 export default function Transactions() {
   const { transactions, getTransactions, deleteTransaction } = useTransactionHook()
@@ -47,7 +48,7 @@ export default function Transactions() {
               {transactions?.map(transaction => (
                 <tr key={transaction.id}>
                   <td className='p-2'>{transaction.description}</td>
-                  <td className='p-2 text-center'>{transaction.value}</td>
+                  <td className='p-2 text-center'>{formatCurrency(transaction.value)}</td>
                   <td className='p-2 text-center'>{transaction.date}</td>
                   <td className='p-2 text-center hidden md:table-cell'>{transaction.category?.name}</td>
                   <td className='p-2 flex gap-2 justify-center'>
