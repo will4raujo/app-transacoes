@@ -7,7 +7,7 @@ import { useState, useEffect } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 
 export default function Transaction() {
-  const { categories } = useCategoryHook();
+  const { categories, getAllCategories } = useCategoryHook();
 
   const { addTransaction, editTransaction, getTransactionById, transaction } = useTransactionHook();
 
@@ -23,6 +23,7 @@ export default function Transaction() {
     if (id) {
       getTransactionById(id as string);
     }
+    getAllCategories();
   }, [id, getTransactionById]);
 
   useEffect(() => {

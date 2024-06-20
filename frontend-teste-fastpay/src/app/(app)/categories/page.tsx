@@ -6,7 +6,7 @@ import { useCategoryHook } from '@/hooks/category.hook';
 
 export default function Categories() {
 
-  const { categories, selectedCategoryType, setSelectedCategoryType, getCategories, addCategory } = useCategoryHook();
+  const { categories, selectedCategoryType, setSelectedCategoryType, getCategoriesByType, addCategory } = useCategoryHook();
 
   const [newCategoryName, setNewCategoryName] = useState<string>('');
 
@@ -24,7 +24,7 @@ export default function Categories() {
   };
 
   const fetchCategories = async () => {
-    getCategories();
+    getCategoriesByType();
   };
 
   useEffect(() => {
