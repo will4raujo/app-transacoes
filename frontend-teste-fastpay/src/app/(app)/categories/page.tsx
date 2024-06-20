@@ -1,39 +1,39 @@
 'use client'
-import { useState, useEffect, Suspense } from 'react';
-import InputText from '@/components/inputText';
-import SubmitButton from '@/components/submitButton';
-import { useCategoryHook } from '@/hooks/category.hook';
+import { useState, useEffect, Suspense } from 'react'
+import InputText from '@/components/inputText'
+import SubmitButton from '@/components/submitButton'
+import { useCategoryHook } from '@/hooks/category.hook'
 
 export default function Categories() {
 
   const { categories, selectedCategoryType, setSelectedCategoryType, getCategoriesByType, addCategory, getAllCategories } = useCategoryHook();
 
-  const [newCategoryName, setNewCategoryName] = useState<string>('');
+  const [newCategoryName, setNewCategoryName] = useState<string>('')
 
   const handleCategoryTypeChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedCategoryType(event.target.value as 'predefined' | 'custom' | 'all');
-  };
+    setSelectedCategoryType(event.target.value as 'predefined' | 'custom' | 'all')
+  }
 
   const addNewCategory = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+    event.preventDefault()
     if (newCategoryName === '') {
-      return alert('O nome da categoria não pode ser vazio');
+      return alert('O nome da categoria não pode ser vazio')
     }
 
     addCategory(newCategoryName, 'custom')
-    setNewCategoryName('');
-  };
+    setNewCategoryName('')
+  }
 
   const fetchCategories = async () => {
-    getCategoriesByType();
-    if (selectedCategoryType === 'all') {
-      getAllCategories();
+    getAllCategories()
+    if (selectedCategoryType !== 'all') {
+      getCategoriesByType()
     }
-  };
+  }
 
   useEffect(() => {
-    fetchCategories();
-  }, [selectedCategoryType]);
+    fetchCategories()
+  }, [selectedCategoryType])
 
   return (
     <main className='w-full px-4 md:px-10 py-5 pr-9 flex flex-col gap-5 mb-[80px] max-w-[1024px] mx-auto'>
