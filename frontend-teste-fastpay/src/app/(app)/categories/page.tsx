@@ -6,12 +6,12 @@ import { useCategoryHook } from '@/hooks/category.hook';
 
 export default function Categories() {
 
-  const { categories, selectedCategoryType, setSelectedCategoryType, getCategoriesByType, addCategory } = useCategoryHook();
+  const { categories, selectedCategoryType, setSelectedCategoryType, getCategoriesByType, addCategory, getAllCategories } = useCategoryHook();
 
   const [newCategoryName, setNewCategoryName] = useState<string>('');
 
   const handleCategoryTypeChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedCategoryType(event.target.value as 'predefined' | 'custom');
+    setSelectedCategoryType(event.target.value as 'predefined' | 'custom' | 'all');
   };
 
   const addNewCategory = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -21,10 +21,14 @@ export default function Categories() {
     }
 
     addCategory(newCategoryName, 'custom')
+    setNewCategoryName('');
   };
 
   const fetchCategories = async () => {
     getCategoriesByType();
+    if (selectedCategoryType === 'all') {
+      getAllCategories();
+    }
   };
 
   useEffect(() => {
@@ -44,28 +48,27 @@ export default function Categories() {
               <select
                 className='flex items-center gap-2 max-w-[238px] h-[48px] rounded-md border-2 border-zinc-500 bg-black/60 p-1 px-2'
                 onChange={handleCategoryTypeChange}
-                value={selectedCategoryType}>
+                value={selectedCategoryType}
+                defaultValue={selectedCategoryType}
+              >
                 <option value='predefined'>Pré-definida</option>
                 <option value='custom'>Personalizada</option>
+                <option value='all'>Todas</option>
               </select>
             </div>
           </div>
           <div className='flex gap-4 flex-col md:flex-row md:items-end'>
-            {selectedCategoryType === 'custom' && (
-              <>
-                <div className='w-auto md:w-[358px]'>
-                  <span className='text-violet-400'>Adicionar nova categoria</span>
-                  <InputText
-                    placeholder='Nome da categoria'
-                    value={newCategoryName}
-                    onChange={(event) => setNewCategoryName(event.target.value)}
-                  />
-                </div>
-                <div className='flex gap-4 flex-wrap items-end'>
-                  <SubmitButton text='Adicionar' type='submit' />
-                </div>
-              </>
-            )}
+            <div className='w-auto md:w-[358px]'>
+              <span className='text-violet-400'>Adicionar nova categoria</span>
+              <InputText
+                placeholder='Nome da categoria'
+                value={newCategoryName}
+                onChange={(event) => setNewCategoryName(event.target.value)}
+              />
+            </div>
+            <div className='flex gap-4 flex-wrap items-end'>
+              <SubmitButton text='Adicionar' type='submit' />
+            </div>
           </div>
         </form>
       </div>

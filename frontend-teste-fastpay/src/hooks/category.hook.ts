@@ -2,7 +2,7 @@ import create from 'zustand';
 import { devtools } from 'zustand/middleware';
 import api from '@/services/api';
 
-type CategoryType = 'predefined' | 'custom';
+type CategoryType = 'predefined' | 'custom' | 'all';
 
 export type Category = {
   id: number;
@@ -21,7 +21,7 @@ type CategoryHook = {
 
 export const useCategoryHook = create<CategoryHook>()(
   devtools((set, get) => ({
-    selectedCategoryType: 'predefined',
+    selectedCategoryType: 'all',
     setSelectedCategoryType: (type) => set({ selectedCategoryType: type }),
     getCategoriesByType: () => {
       api.get(`/categories/${get().selectedCategoryType}`)

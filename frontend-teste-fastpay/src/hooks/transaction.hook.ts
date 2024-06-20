@@ -87,7 +87,7 @@ export const useTransactionHook = create<TransactionHook>()(
     getSummary: async () => {
       try {
         const response = await api.post('/transactions/summary')
-        return response
+        return response.data
       } catch (error) {
         alert('Erro ao carregar relatório')
       }

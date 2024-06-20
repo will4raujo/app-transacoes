@@ -5,12 +5,10 @@ import { useCategoryHook } from '@/hooks/category.hook'
 
 export default function Summary() {
   const { getSummary } = useTransactionHook()
-  const { categories } = useCategoryHook()
   const [summary, setSummary] = useState<{ categoryName: string, transactionCount: number, totalValue: number }[]>([])
 
   const fetchSummary = async () => {
     const response = await getSummary()
-    console.log(response)
     setSummary(response as any)
   }
 
