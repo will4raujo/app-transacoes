@@ -30,13 +30,14 @@ export const useTransactionHook = create<TransactionHook>()(
       const response = await api.get('/transactions')
         .then((response) => {
           response.data.map((transaction: Transaction) => {
-            transaction.date = new Date(transaction.date).toLocaleDateString('pt-BR');
+            transaction.date = new Date(transaction.date).toISOString().split('T')[0]
+            transaction.date = transaction.date.split('-').reverse().join('/')
           });
-          set({ transactions: response.data });
+          set({ transactions: response.data })
         })
         .catch(() => {
           alert
-            ('Erro ao carregar transações');
+            ('Erro ao carregar transações')
         }
         );
       return response;
@@ -44,51 +45,51 @@ export const useTransactionHook = create<TransactionHook>()(
     addTransaction: async (data) => {
       const response = await api.post('/transactions', data)
         .then(() => {
-          alert('Transação adicionada com sucesso');
+          alert('Transação adicionada com sucesso')
           get().getTransactions();
         })
         .catch(() => {
-          alert('Erro ao adicionar transação');
+          alert('Erro ao adicionar transação')
         });
       return response;
     },
     editTransaction: async (id, data) => {
       const response = await api.put(`/transactions/${id}`, data)
         .then(() => {
-          alert('Transação editada com sucesso');
+          alert('Transação editada com sucesso')
           get().getTransactions();
         })
         .catch(() => {
-          alert('Erro ao editar transação');
+          alert('Erro ao editar transação')
         });
       return response;
     },
     deleteTransaction: async (id) => {
       const response = await api.delete(`/transactions/${id}`)
         .then(() => {
-          alert('Transação deletada com sucesso');
-          get().getTransactions();
+          alert('Transação deletada com sucesso')
+          get().getTransactions()
         })
         .catch(() => {
-          alert('Erro ao deletar transação');
+          alert('Erro ao deletar transação')
         });
 
       return response;
     },
     getTransactionById: async (id) => {
       try {
-        const response = await api.get(`/transactions/${id}`);
-        set({ transaction: response.data });
+        const response = await api.get(`/transactions/${id}`)
+        set({ transaction: response.data })
       } catch (error) {
-        alert('Erro ao carregar transação');
+        alert('Erro ao carregar transação')
       }
     },
     getSummary: async () => {
       try {
-        const response = await api.post('/transactions/summary');
-        return response;
+        const response = await api.post('/transactions/summary')
+        return response.data
       } catch (error) {
-        alert('Erro ao carregar relatório');
+        alert('Erro ao carregar relatório')
       }
     },
   }))

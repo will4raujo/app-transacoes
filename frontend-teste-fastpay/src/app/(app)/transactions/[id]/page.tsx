@@ -7,7 +7,7 @@ import { useState, useEffect } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 
 export default function Transaction() {
-  const { categories } = useCategoryHook();
+  const { categories, getAllCategories } = useCategoryHook();
 
   const { addTransaction, editTransaction, getTransactionById, transaction } = useTransactionHook();
 
@@ -20,19 +20,25 @@ export default function Transaction() {
   const [category, setCategory] = useState('');
 
   useEffect(() => {
-    if (id) {
+    if (id && id !== 'new') {
       getTransactionById(id as string);
+    } else {
+      setDescription('');
+      setValue('');
+      setDate('');
+      setCategory('');
     }
-  }, [id, getTransactionById]);
+    getAllCategories();
+  }, [id, getTransactionById, getAllCategories]);
 
   useEffect(() => {
-    if (transaction) {
+    if (transaction && id !== 'new') {
       setDescription(transaction.description);
       setValue(transaction.value.toString());
       setDate(new Date(transaction.date).toISOString().split('T')[0]);
       setCategory(transaction.categoryId.toString());
     }
-  }, [transaction]);
+  }, [transaction, id]);
 
   const handleSaveTransaction = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -48,17 +54,19 @@ export default function Transaction() {
       categoryId: Number(category),
     };
 
+    if (id === 'new') {
+      await addTransaction(transactionData);
+      router.push('/transactions');
+    } 
+
     if (id !== 'new') {
       await editTransaction(id as string, transactionData);
-    } else {
-      await addTransaction(transactionData);
+      router.push('/transactions');
     }
-
-    router.push('/transactions');
   };
 
   return (
-    <main className='w-full px-4 md:px-10 py-5 flex flex-col gap-5 mb-[80px] md:mx-auto max-w-[800px]'>
+    <main className='w-full px-4 md:px-10 py-5 pr-9 flex flex-col gap-5 mb-[80px] md:mx-auto max-w-[800px]'>
       <h1 className='text-3xl font-bold'>{id ? 'Editar' : 'Cadastrar'} Transação</h1>
       <div>
         <form className='grid grid-cols-1 md:grid-cols-4 gap-4' onSubmit={handleSaveTransaction}>

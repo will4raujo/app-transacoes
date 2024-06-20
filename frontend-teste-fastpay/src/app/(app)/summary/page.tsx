@@ -5,12 +5,10 @@ import { useCategoryHook } from '@/hooks/category.hook'
 
 export default function Summary() {
   const { getSummary } = useTransactionHook()
-  const { categories } = useCategoryHook()
   const [summary, setSummary] = useState<{ categoryName: string, transactionCount: number, totalValue: number }[]>([])
 
   const fetchSummary = async () => {
     const response = await getSummary()
-    console.log(response)
     setSummary(response as any)
   }
 
@@ -19,7 +17,7 @@ export default function Summary() {
   }, [])
 
   return (
-    <main className='w-full px-4 md:px-10 py-5 flex flex-col gap-5 mb-[80px] md:mx-auto max-w-[800px]'>
+    <main className='w-full px-4 md:px-10 py-5 pr-9 flex flex-col gap-5 mb-[80px] md:mx-auto max-w-[800px]'>
       <h1 className='text-3xl font-bold'>Relatório de despesas por categoria</h1>
       {summary.length > 0 ? (
         <table className='w-full border-collapse border border-zinc-400'>
