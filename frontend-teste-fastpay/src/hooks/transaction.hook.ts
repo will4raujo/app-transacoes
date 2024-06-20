@@ -20,7 +20,9 @@ type TransactionHook = {
   editTransaction: (id: string, data: Transaction) => void;
   deleteTransaction: (id: string) => void;
   getTransactionById: (id: string) => void;
+  getSummary: () => void;
 };
+
 
 export const useTransactionHook = create<TransactionHook>()(
   devtools((set, get) => ({
@@ -80,6 +82,14 @@ export const useTransactionHook = create<TransactionHook>()(
       } catch (error) {
         alert('Erro ao carregar transação');
       }
-    }
+    },
+    getSummary: async () => {
+      try {
+        const response = await api.post('/transactions/summary');
+        return response;
+      } catch (error) {
+        alert('Erro ao carregar relatório');
+      }
+    },
   }))
 )

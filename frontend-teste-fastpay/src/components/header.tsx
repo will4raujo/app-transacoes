@@ -20,6 +20,7 @@ export default function Header() {
         <Link href='/'>Home</Link>
         <Link href='/categories'>Categorias</Link>
         <Link href='/transactions'>Transações</Link>
+        <Link href='/summary'>Relatório</Link>
       </BurguerMenu>
       <nav className='hidden md:block'>
         <ul className='flex gap-4'>
@@ -31,6 +32,9 @@ export default function Header() {
           </li>
           <li>
             <Link href='/transactions'>Transações</Link>
+          </li>
+          <li>
+            <Link href='/summary'>Relatório</Link>
           </li>
         </ul>
       </nav>
