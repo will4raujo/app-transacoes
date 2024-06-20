@@ -45,7 +45,6 @@ export const useCategoryHook = create<CategoryHook>()(
     getAllCategories: () => {
       api.get('/categories')
         .then((response) => {
-          console.log(response);
           set({ categories: response.data });
         })
         .catch(() => {

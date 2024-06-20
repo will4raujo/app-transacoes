@@ -20,20 +20,25 @@ export default function Transaction() {
   const [category, setCategory] = useState('');
 
   useEffect(() => {
-    if (id) {
+    if (id && id !== 'new') {
       getTransactionById(id as string);
+    } else {
+      setDescription('');
+      setValue('');
+      setDate('');
+      setCategory('');
     }
     getAllCategories();
-  }, [id, getTransactionById]);
+  }, [id, getTransactionById, getAllCategories]);
 
   useEffect(() => {
-    if (transaction) {
+    if (transaction && id !== 'new') {
       setDescription(transaction.description);
       setValue(transaction.value.toString());
       setDate(new Date(transaction.date).toISOString().split('T')[0]);
       setCategory(transaction.categoryId.toString());
     }
-  }, [transaction]);
+  }, [transaction, id]);
 
   const handleSaveTransaction = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -49,13 +54,15 @@ export default function Transaction() {
       categoryId: Number(category),
     };
 
+    if (id === 'new') {
+      await addTransaction(transactionData);
+      router.push('/transactions');
+    } 
+
     if (id !== 'new') {
       await editTransaction(id as string, transactionData);
-    } else {
-      await addTransaction(transactionData);
+      router.push('/transactions');
     }
-
-    router.push('/transactions');
   };
 
   return (
