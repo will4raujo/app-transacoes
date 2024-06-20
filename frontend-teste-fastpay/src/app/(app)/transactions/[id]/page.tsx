@@ -8,7 +8,7 @@ import { useRouter, useParams } from 'next/navigation';
 
 export default function Transaction() {
   const { categories } = useCategoryHook();
-  console.log(categories)
+
   const { addTransaction, editTransaction, getTransactionById, transaction } = useTransactionHook();
 
   const { id } = useParams();
@@ -48,7 +48,7 @@ export default function Transaction() {
       categoryId: Number(category),
     };
 
-    if (id) {
+    if (id !== 'new') {
       await editTransaction(id as string, transactionData);
     } else {
       await addTransaction(transactionData);
