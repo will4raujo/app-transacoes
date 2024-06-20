@@ -36,7 +36,10 @@ export const useCategoryHook = create<CategoryHook>()(
       api.post('/categories', { name, type })
         .then(() => {
           alert('Categoria adicionada com sucesso');
-          get().getCategoriesByType();
+          get().getAllCategories()
+          if (get().selectedCategoryType !== 'all') {
+            get().getCategoriesByType()
+          }
         })
         .catch(() => {
           alert('Erro ao adicionar categoria');
