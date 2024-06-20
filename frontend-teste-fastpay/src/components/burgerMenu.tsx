@@ -13,8 +13,9 @@ export default function BurguerMenu({ children }: { children: ReactNode }) {
 
   return (
     <div className='md:hidden'>
-      <div className='cursor-pointer' onClick={handleMenu}>
-        <Menu size={20} />
+      <div className='cursor-pointer flex gap-2 items-center' onClick={handleMenu}>
+        <Menu size={22} />
+        <span className='text-white text-lg'>Menu</span>
       </div>
     { isOpen && (
         <div className='fixed left-0 top-0 h-screen w-60 bg-black/90 flex flex-col justify-start gap-4 py-2 px-4'>

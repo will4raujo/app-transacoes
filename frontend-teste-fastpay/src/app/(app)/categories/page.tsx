@@ -36,7 +36,7 @@ export default function Categories() {
   }, [selectedCategoryType]);
 
   return (
-    <main className='w-full px-4 md:px-10 py-5 flex flex-col gap-5 mb-[80px] max-w-[1024px] mx-auto'>
+    <main className='w-full px-4 md:px-10 py-5 pr-9 flex flex-col gap-5 mb-[80px] max-w-[1024px] mx-auto'>
       <h1 className='text-3xl font-bold'>Categorias</h1>
       <div>
         <form className='flex flex-col gap-4 ' onSubmit={addNewCategory}>
@@ -58,7 +58,7 @@ export default function Categories() {
             </div>
           </div>
           <div className='flex gap-4 flex-col md:flex-row md:items-end'>
-            <div className='w-auto md:w-[358px]'>
+            <div className='w-[358px]'>
               <span className='text-violet-400'>Adicionar nova categoria</span>
               <InputText
                 placeholder='Nome da categoria'

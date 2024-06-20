@@ -39,8 +39,8 @@ export default function Header() {
         </ul>
       </nav>
 
-      <div className='cursor-pointer flex gap-2 items-center' onClick={handleLogout}>
-        <span className='hidden md:block text-lg text-white'>Sair</span>
+      <div className='cursor-pointer flex gap-2 items-center mr-2' onClick={handleLogout}>
+        <span className='block text-lg text-white'>Sair</span>
         <LogOut size={20} />
       </div>
     </header>

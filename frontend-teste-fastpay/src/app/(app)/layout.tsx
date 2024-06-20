@@ -10,7 +10,7 @@ export default function HomeLayout({ children }: { children: ReactNode }) {
   return (
     <>
       {isAuthenticated && (
-        <div className='relative mx-auto grid min-h-screen w-full grid-rows-[min-content_max-content] gap-5'>
+        <div className='relative mx-auto grid min-h-screen w-screen grid-rows-[min-content_max-content] gap-5'>
         <Header />
         {children}
         <Footer />
