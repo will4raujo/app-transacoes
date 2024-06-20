@@ -46,7 +46,7 @@ export default function Transactions() {
             <Suspense fallback={<p>Carregando lista de transações...</p>}>
               {transactions?.map(transaction => (
                 <tr key={transaction.id}>
-                  <td className='p-2 text-center'>{transaction.description}</td>
+                  <td className='p-2'>{transaction.description}</td>
                   <td className='p-2 text-center'>{transaction.value}</td>
                   <td className='p-2 text-center'>{transaction.date}</td>
                   <td className='p-2 text-center hidden md:table-cell'>{transaction.category?.name}</td>
