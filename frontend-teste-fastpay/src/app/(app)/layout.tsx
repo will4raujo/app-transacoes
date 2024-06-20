@@ -2,25 +2,28 @@
 import { useAuthHook } from "@/hooks/auth.hook";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
-import { ReactNode } from "react";
+import { ReactNode, useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 export default function HomeLayout({ children }: { children: ReactNode }) {
-  const { isAuthenticated } = useAuthHook()
+  const { isAuthenticated } = useAuthHook();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!isAuthenticated) {
+      router.push('/sign-in');
+    }
+  }, [isAuthenticated, router]);
+
+  if (!isAuthenticated) {
+    return null;
+  }
 
   return (
-    <>
-      {isAuthenticated && (
-        <div className='relative mx-auto grid min-h-screen w-screen grid-rows-[min-content_max-content] gap-5'>
-        <Header />
-        {children}
-        <Footer />
-      </div>
-      )}
-      {!isAuthenticated && (
-        <div className='flex flex-col items-center justify-center h-screen'>
-          <h1 className='text-3xl font-bold'>Você precisa estar logado para acessar essa página</h1>
-        </div>
-      )}
-    </>
-  )
+    <div className='relative mx-auto grid min-h-screen w-screen grid-rows-[min-content_max-content] gap-5'>
+      <Header />
+      {children}
+      <Footer />
+    </div>
+  );
 }
