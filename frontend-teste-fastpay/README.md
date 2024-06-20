@@ -4,6 +4,7 @@ Welcome! This guide will help you set up the project locally.
 
 ## Prerequisites
 
+**Do not start these instructions before ensuring that the backend application is functional**
 Make sure you have the following installed on your system:
 
 - [Node.js](https://nodejs.org/) (version 14 or later)
