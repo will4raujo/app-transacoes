@@ -1,6 +1,7 @@
 import create from 'zustand';
 import { devtools } from 'zustand/middleware';
 import api from '@/services/api';
+import { useAsyncHook } from '@/hooks/async.hook';
 
 type CategoryType = 'predefined' | 'custom' | 'all';
 
@@ -33,8 +34,12 @@ export const useCategoryHook = create<CategoryHook>()(
         });
     },
     addCategory: (name, type) => {
+      const asyncHook = useAsyncHook.getState();
+      asyncHook.loading();
+
       api.post('/categories', { name, type })
         .then(() => {
+          asyncHook.sucess();
           alert('Categoria adicionada com sucesso');
           get().getAllCategories()
           if (get().selectedCategoryType !== 'all') {
@@ -42,6 +47,7 @@ export const useCategoryHook = create<CategoryHook>()(
           }
         })
         .catch(() => {
+          asyncHook.sucess();
           alert('Erro ao adicionar categoria');
         });
     },

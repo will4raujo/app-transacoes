@@ -2,6 +2,7 @@ import create from 'zustand'
 import { devtools } from 'zustand/middleware'
 import api from '@/services/api'
 import { Category } from './category.hook'
+import { useAsyncHook } from './async.hook'
 
 type Transaction = {
   id?: string;
@@ -43,24 +44,32 @@ export const useTransactionHook = create<TransactionHook>()(
       return response;
     },
     addTransaction: async (data) => {
+      const asyncHook = useAsyncHook.getState()
+      asyncHook.loading()
       const response = await api.post('/transactions', data)
         .then(() => {
           alert('Transação adicionada com sucesso')
+          asyncHook.sucess()
           get().getTransactions();
         })
         .catch(() => {
           alert('Erro ao adicionar transação')
+          asyncHook.sucess()
         });
       return response;
     },
     editTransaction: async (id, data) => {
+      const asyncHook = useAsyncHook.getState()
+      asyncHook.loading()
       const response = await api.put(`/transactions/${id}`, data)
         .then(() => {
           alert('Transação editada com sucesso')
+          asyncHook.sucess()
           get().getTransactions();
         })
         .catch(() => {
           alert('Erro ao editar transação')
+          asyncHook.sucess()
         });
       return response;
     },

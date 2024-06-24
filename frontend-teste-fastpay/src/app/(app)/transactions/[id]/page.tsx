@@ -5,7 +5,7 @@ import { useCategoryHook } from '@/hooks/category.hook'
 import { useTransactionHook } from '@/hooks/transaction.hook'
 import { useState, useEffect } from 'react'
 import { useRouter, useParams } from 'next/navigation'
-
+import { useAsyncHook } from '@/hooks/async.hook'
 
 export default function Transaction() {
   const { categories, getAllCategories } = useCategoryHook()
@@ -17,6 +17,8 @@ export default function Transaction() {
   const [value, setValue] = useState('')
   const [date, setDate] = useState('')
   const [category, setCategory] = useState('')
+
+  const { isLoading } = useAsyncHook()
 
   useEffect(() => {
     if (id && id !== 'new') {
@@ -102,7 +104,7 @@ export default function Transaction() {
             <button type='button' className='bg-zinc-600 min-w-[120px] h-[48px] p-2 text-white rounded-md hover:bg-zinc-500 transition-colors duration-200' onClick={() => router.push('/transactions')}>
               Cancelar
             </button>
-            <SubmitButton text={id !== 'new' ? 'Salvar' : 'Cadastrar'} type='submit' />
+            <SubmitButton text={id !== 'new' ? 'Salvar' : 'Cadastrar'} type='submit' loading={isLoading} />
           </div>
         </form>
       </div>
