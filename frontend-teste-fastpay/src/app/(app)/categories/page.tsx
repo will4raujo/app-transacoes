@@ -3,12 +3,15 @@ import { useState, useEffect, Suspense } from 'react'
 import InputText from '@/components/inputText'
 import SubmitButton from '@/components/submitButton'
 import { useCategoryHook } from '@/hooks/category.hook'
+import { useAsyncHook } from '@/hooks/async.hook'
 
 export default function Categories() {
 
   const { categories, selectedCategoryType, setSelectedCategoryType, getCategoriesByType, addCategory, getAllCategories } = useCategoryHook();
 
   const [newCategoryName, setNewCategoryName] = useState<string>('')
+
+  const { isLoading } = useAsyncHook()
 
   const handleCategoryTypeChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedCategoryType(event.target.value as 'predefined' | 'custom' | 'all')
@@ -17,6 +20,7 @@ export default function Categories() {
   const addNewCategory = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     if (newCategoryName === '') {
+      
       return alert('O nome da categoria não pode ser vazio')
     }
 
@@ -67,7 +71,7 @@ export default function Categories() {
               />
             </div>
             <div className='flex gap-4 flex-wrap items-end'>
-              <SubmitButton text='Adicionar' type='submit' />
+              <SubmitButton text='Adicionar' type='submit' loading={isLoading} />
             </div>
           </div>
         </form>

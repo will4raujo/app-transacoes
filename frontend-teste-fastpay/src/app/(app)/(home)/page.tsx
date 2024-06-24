@@ -9,7 +9,6 @@ export default async function Home() {
       <ul className='list-disc list-inside'>
         <li className="mb-3">Melhorar a segurança da aplicação, utilizando chave publica e privada para autenticação com o algoritmo RS256</li>
         <li className="mb-3">Melhor utilização da hidratação de páginas, para que mais componentes já renderizem diretamente ao lado do servidor</li>
-        <li className="mb-3">Adicionar loading nos botões para uma melhor experiência do usuário</li>
         <li className="mb-3">Aplicar todo o tailwind dentro de classes separadamente, utilizando o método @apply para possíveis problemas de declaração</li>
         <li className="mb-3">Melhorar as categorias pré-defiidas, criando modelo de categorias empresarial (ex: Despesas com Marketing, folha de pagamento, fornecedores...) e despesas pessoais</li>
         <li className="mb-3">Criar uma categorização de tipo de despesa fixa ou variável para melhorar relatórios</li>

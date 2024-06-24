@@ -7,28 +7,36 @@ import Paragraph from '@/components/paragraph'
 import ValidationItem from '@/components/validationItem'
 import { useRouter } from 'next/navigation'
 import api from '@/services/api'
+import { useAsyncHook } from '@/hooks/async.hook'
 
 export default function SignUp() {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
+  const { isLoading } = useAsyncHook()
+
   const router = useRouter()
 
   function handleSignUp() {
-    
+    const asyncHook = useAsyncHook.getState()
+    asyncHook.loading()
+
     if (!name || !email || !password) {
+      asyncHook.sucess()
       return alert("Preencha todos os campos")
     }
 
     api.post('/accounts', { name, email, password })
       .then(() => {
         alert("Conta criada com sucesso")
+        asyncHook.sucess()
         router.push('/sign-in')
 
       })
       .catch(() => {
         alert("Erro ao criar conta")
+        asyncHook.sucess()
       })
   }
 
@@ -84,7 +92,7 @@ export default function SignUp() {
         )
       }
   
-      <SubmitButton text="Cadastrar" onClick={handleSignUp} type='button' />
+      <SubmitButton text="Cadastrar" onClick={handleSignUp} type='button' loading={isLoading} />
 
       <Link href="/sign-in" className='text-white self-center hover:underline'>
         Já tenho uma conta

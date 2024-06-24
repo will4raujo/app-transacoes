@@ -5,11 +5,14 @@ import Link from 'next/link'
 import { useState } from 'react'
 import { useAuthHook } from '@/hooks/auth.hook'
 import { useRouter } from 'next/navigation'
+import { useAsyncHook } from '@/hooks/async.hook'
 
 export default function SignIn() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const routes = useRouter()
+
+  const { isLoading } = useAsyncHook()
 
   const { login } = useAuthHook((state ) => ({
     login: state.login,
@@ -30,7 +33,7 @@ export default function SignIn() {
       <InputText placeholder="E-mail" required onChange={(e) => setEmail(e.target.value)}/>
       <InputText placeholder="Senha" type="password" required onChange={(e) => setPassword(e.target.value)}/>
 
-      <SubmitButton text="Entrar" type='submit' />
+      <SubmitButton text="Entrar" type='submit' loading={isLoading}/>
 
       <Link href="/sign-up" className='text-white self-center hover:underline'>
         Ainda não tenho uma conta
