@@ -52,6 +52,10 @@ export default function Transaction() {
     setValue(formattedValue)
   }
 
+  const handleCancel = () => {
+    confirm('Deseja cancelar a transação? Todas as informações serão perdidas') && router.push('/transactions')
+  }
+
   const handleSaveTransaction = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
 
@@ -92,7 +96,7 @@ export default function Transaction() {
           <div className='md:col-span-2'>
             <select className='flex items-center gap-2 w-full h-[48px] rounded-md border-2 border-zinc-500 bg-black/60 p-1 px-2' onChange={(e) => setCategory(e.target.value)} required value={category}>
               <option value='' disabled hidden>
-                {id === 'new' ? 'Selecione uma categoria' : 'Categoria selecionada'}
+                {id === 'new' ? 'Selecione uma categoria' : 'aguarde...'}
               </option>
               {categories?.map((category, index) => (
                 <option key={index} value={category.id}>{category.name}</option>
@@ -101,7 +105,7 @@ export default function Transaction() {
           </div>
 
           <div className='flex gap-4 justify-end md:col-span-4'>
-            <button type='button' className='bg-zinc-600 min-w-[120px] h-[48px] p-2 text-white rounded-md hover:bg-zinc-500 transition-colors duration-200' onClick={() => router.push('/transactions')}>
+            <button type='button' className='bg-zinc-600 min-w-[120px] h-[48px] p-2 text-white rounded-md hover:bg-zinc-500 transition-colors duration-200' onClick={handleCancel}>
               Cancelar
             </button>
             <SubmitButton text={id !== 'new' ? 'Salvar' : 'Cadastrar'} type='submit' loading={isLoading} />
