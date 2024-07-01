@@ -4,10 +4,11 @@ import InputText from '@/components/inputText'
 import SubmitButton from '@/components/submitButton'
 import { useCategoryHook } from '@/hooks/category.hook'
 import { useAsyncHook } from '@/hooks/async.hook'
+import { X } from 'lucide-react'
 
 export default function Categories() {
 
-  const { categories, selectedCategoryType, setSelectedCategoryType, getCategoriesByType, addCategory, getAllCategories } = useCategoryHook();
+  const { categories, selectedCategoryType, setSelectedCategoryType, getCategoriesByType, addCategory, getAllCategories, deleteCategory } = useCategoryHook();
 
   const [newCategoryName, setNewCategoryName] = useState<string>('')
 
@@ -26,6 +27,13 @@ export default function Categories() {
 
     addCategory(newCategoryName, 'custom')
     setNewCategoryName('')
+  }
+
+  const handleDeleteCategory = async (id: number) => {
+    const confirmDelete = window.confirm('Tem certeza que deseja deletar essa categoria?')
+    if (confirmDelete) {
+      await deleteCategory(id)
+    }
   }
 
   const fetchCategories = async () => {
@@ -82,8 +90,9 @@ export default function Categories() {
           <hr className='bg-zinc-700' />
           <div className='flex gap-2 flex-wrap my-6'>
             {categories?.map((category, index) => (
-              <span className='bg-zinc-900 text-white p-2 rounded-md' key={index}>
+              <span className='bg-zinc-900 text-white p-2 rounded-md flex gap-2 items-center' key={index}>
                 {category.name}
+                { category.type === 'custom' && <X className='cursor-pointer' size={16} onClick={() => handleDeleteCategory(category.id)} />}
               </span>
             ))}
           </div>

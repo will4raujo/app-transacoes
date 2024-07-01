@@ -18,6 +18,7 @@ type CategoryHook = {
   getCategoriesByType: () => void;
   addCategory: (name: string, type: string) => void;
   getAllCategories: () => void;
+  deleteCategory: (id: number) => void;
 };
 
 export const useCategoryHook = create<CategoryHook>()(
@@ -29,8 +30,8 @@ export const useCategoryHook = create<CategoryHook>()(
         .then((response) => { 
           set({ categories: response.data });
         })
-        .catch(() => {
-          alert('Erro ao carregar categorias');
+        .catch((error) => {
+          alert(error.response.data.message);
         });
     },
     addCategory: (name, type) => {
@@ -46,9 +47,9 @@ export const useCategoryHook = create<CategoryHook>()(
             get().getCategoriesByType()
           }
         })
-        .catch(() => {
+        .catch((error) => {
           asyncHook.sucess();
-          alert('Erro ao adicionar categoria');
+          alert(error.response.data.message);
         });
     },
     getAllCategories: () => {
@@ -56,9 +57,22 @@ export const useCategoryHook = create<CategoryHook>()(
         .then((response) => {
           set({ categories: response.data });
         })
-        .catch(() => {
-          alert('Erro ao carregar categorias');
+        .catch((error) => {
+          alert(error.response.data.message);
         });
     },
+    deleteCategory: (id) => {
+      api.delete(`/categories/${id}`)
+        .then(() => {
+          alert('Categoria deletada com sucesso')
+          get().getAllCategories()
+          if (get().selectedCategoryType !== 'all') {
+            get().getCategoriesByType()
+          }
+        })
+        .catch((error) => {
+          alert(error.response.data.message)
+        });
+    }
   }))
 )
