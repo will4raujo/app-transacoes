@@ -8,7 +8,10 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: 'Teste Willian Araujo',
+  title: {
+    template: '%s | Teste Willian Araujo',
+    default: 'Teste Willian Araujo'
+  },
   description: 'Teste para vaga de desenvolvedor fullstack na Fastpay',
 };
 
