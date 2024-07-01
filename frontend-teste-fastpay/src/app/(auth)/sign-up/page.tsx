@@ -27,6 +27,11 @@ export default function SignUp() {
       return alert("Preencha todos os campos")
     }
 
+    if (Object.values(validations).includes(false)) {
+      asyncHook.sucess();
+      return alert("A senha não atende aos requisitos");
+    }
+
     api.post('/accounts', { name, email, password })
       .then(() => {
         alert("Conta criada com sucesso")
