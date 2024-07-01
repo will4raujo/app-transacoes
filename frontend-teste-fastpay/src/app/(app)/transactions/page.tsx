@@ -20,8 +20,11 @@ export default function Transactions() {
   }
 
   const handleDeleteTransaction = (id: string) => {
-    deleteTransaction(id)
-    fetchTransactions()
+    const confirmDelete = window.confirm('Tem certeza que deseja deletar essa transação?')
+    if (confirmDelete) {
+      deleteTransaction(id)
+      fetchTransactions()
+    }
   }
 
   useEffect(() => {
