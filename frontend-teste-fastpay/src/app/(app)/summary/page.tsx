@@ -39,7 +39,7 @@ export default function Summary() {
           </tbody>
         </table>
       ) : (
-        <p>Carregando...</p>
+        <p>Cadastre ao menos uma transação para que o relatório seja apresentado</p>
       )}
     </main>
   )

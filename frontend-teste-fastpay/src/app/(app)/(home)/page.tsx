@@ -2,7 +2,7 @@ import { Check } from 'lucide-react'
 
 export default async function Home() {  
   return(
-    <main className='w-full px-4 md:px-10 py-5 pr-4 flex flex-col gap-5 mb-[80px] md:mx-auto max-w-[1024px]'>
+    <main className='w-full px-4 md:px-10 py-5 pr-8 flex flex-col gap-5 mb-[80px] md:mx-auto max-w-[1024px]'>
       <h1 className='text-3xl font-bold'>Desafio de Teste Fullstack FastPay</h1>
 
       <h2>Para esta aplicação, pontos que podem ser melhorados:</h2>
