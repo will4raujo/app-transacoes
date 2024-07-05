@@ -88,8 +88,6 @@ export default async function Home() {
         <li className="mb-3 flex gap-2 items-center"><Check className='min-w-[24px] self-start' /> Commits: Faça commits frequentes e bem descritos no Git.</li>
         <li className="mb-3 flex gap-2 items-center"><Check className='min-w-[24px] self-start' /> README: Inclua um README detalhado explicando como configurar e rodar a aplicação localmente</li>
       </ul>
-      <h2 className='text-xl font-bold'>Entrega</h2>
-      <p className="text-justify">Por favor, crie um repositório privado no GitHub e adicione Ícaro Sant’Ana como colaborador. O prazo para entrega é de 7 dias a partir do recebimento deste desafio</p>      
     </main>
   )
 }
