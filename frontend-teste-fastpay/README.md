@@ -23,7 +23,7 @@ Follow these steps to set up and run the project:
 2. **Navigate to the project directory**
  
   ```sh
-  cd your-repository/front-teste-fastpay
+  cd your-repository
   ```
 
 3. **Install the dependencies**

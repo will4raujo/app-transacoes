@@ -6,10 +6,6 @@ export default function Footer() {
       <Paragraph>
         &copy; 2024 - Willian Araujo
       </Paragraph>
-
-      <Paragraph>
-        Processo Seletivo FastPay
-      </Paragraph>
     </footer>
   )
 }

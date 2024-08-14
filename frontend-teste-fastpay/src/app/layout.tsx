@@ -9,10 +9,10 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: {
-    template: '%s | Teste Willian Araujo',
-    default: 'Teste Willian Araujo'
+    template: '%s | Willian Araujo',
+    default: 'Willian Araujo'
   },
-  description: 'Teste para vaga de desenvolvedor fullstack na Fastpay',
+  description: 'Aplicação web para gerenciamento de despesas pessoais',
 };
 
 export default function RootLayout({

@@ -49,7 +49,7 @@ export const useAuthHook = create<AuthData>()(
         },
       }),
       {
-        name: 'fastpay-auth',
+        name: 'app-auth',
         getStorage: () => localStorage,
       },
     ),
